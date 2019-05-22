@@ -1,0 +1,165 @@
+version: 2
+jobs:
+# Python CircleCI 2.0 configuration file
+#
+# Check https://circleci.com/docs/2.0/language-python/ for more details
+#
+  testterraform:
+    #machine: true
+    docker:
+      - image: circleci/python:latest
+    environment:
+            TF_VERSION: "0.11.13"
+    steps:
+      - checkout
+      - run:
+            name: Install awscli
+            command: sudo pip install awscli
+      - run:
+          name: Install Terraform
+          command: |
+              wget https://releases.hashicorp.com/terraform/0.11.13/terraform_0.11.13_linux_amd64.zip
+              sudo unzip terraform_0.11.13_linux_amd64.zip -d ~/
+              sudo chmod +x ~/terraform
+              sudo rm -rf ./terraform_0.11.13_linux_amd64.zip
+      - run:
+          name: Install awscli
+          command: sudo pip install awscli
+      - run:
+          name: create aws creds file.
+          command: |
+            mkdir -p ~/.aws
+            echo -e "[orc-platform]\nrole_arn = arn:aws:iam::953164603717:role/LogicWorks\nsource_profile = default\n" >> ~/.aws/credentials
+      - restore_cache:
+          keys:
+            - terraform-cache-v1-{{ .Revision }}
+      - run:
+          name: Test ORCS ECS
+          command: |
+              cd ./orcs-ecs-terraform
+              if [ -f "*.tf" ]; then
+                 ~/terraform init -lock=false &&  ~/terraform validate  -check-variables=false ;
+              else
+                 echo "No Terraform files find no need to check them";
+              fi
+      - run:
+          name: Test ORCS RDS
+          command: |
+            cd ./orcs-rds-terraform
+            if [ -f "*.tf" ]; then
+              ~/terraform init -lock=false &&  ~/terraform validate  -check-variables=false ;
+            else
+               echo "No Terraform files find no need to check them";
+            fi
+      - run:
+          name: Test ORCS SQS
+          command: |
+            cd ./orcs-sqs-terraform
+            if [ -f "*.tf" ]; then
+               ./terraform init -lock=false &&  ./terraform validate  -check-variables=false ;
+            else
+               echo "No Terraform files find no need to check them";
+            fi
+      - save_cache:
+          key: terraform-cache-v1-{{ .Revision }}
+          paths:
+            - .git
+            - ./orcs-ecs-terraform
+            - ./orcs-rds-terraform
+            - ./orcs-sqs-terraform
+            - ~/.aws
+            - ~/terraform
+
+  sandbox-ecs:
+     #example of dev job for gateing purpose.
+    docker:
+      - image: circleci/python:latest
+    environment:
+      TF_VERSION: "0.11.13"
+    steps:
+      - restore_cache:
+          keys:
+            - terraform-cache-v1-{{ .Revision }}
+
+      - run:
+          name: run terraform ecs plan
+          command: |
+            cd ./orcs-ecs-terraform
+            ~/terraform init -backend-config="bucket=orcs-sandbox" -backend-config="key=orcs-ecs-terraform/${MY_ENV}.tfstate"
+            ~/terraform plan -refresh=true -var-file environments/${MY_ENV}.tfvars -out ${MY_ENV}.plan
+  deploy-sandbox-ecs:
+    #example of dev job for gateing purpose.
+    docker:
+      - image: circleci/python:latest
+    environment:
+      TF_VERSION: "0.11.13"
+    steps:
+      - restore_cache:
+          keys:
+            - terraform-cache-v1-{{ .Revision }}
+
+      - run:
+          name: run terraform ecs apply
+          command: |
+            cd ./orcs-ecs-terraform
+            ~/terraform init -backend-config="bucket=orcs-sandbox" -backend-config="key=orcs-ecs-terraform/${MY_ENV}.tfstate"
+            ~/terraform plan -refresh=true -var-file environments/${MY_ENV}.tfvars -out ${MY_ENV}.plan
+            ~/terraform apply -auto-approve ${MY_ENV}.plan
+  sandbox-rds:
+    #example of dev job for gateing purpose.
+    docker:
+      - image: circleci/python:latest
+    environment:
+      TF_VERSION: "0.11.13"
+    steps:
+      - restore_cache:
+          keys:
+            - terraform-cache-v1-{{ .Revision }}
+      - run:
+          name: run terraform rds plan
+          command: |
+            cd ./orcs-rds-terraform
+            ~/terraform init -backend-config="bucket=orcs-sandbox" -backend-config="key=orcs-rds-terraform/${MY_ENV}.tfstate"
+            ~/terraform plan -refresh=true -var-file environments/${MY_ENV}.tfvars -out ${MY_ENV}.plan
+  deploy-sandbox-rds:
+    #example of dev job for gateing purpose.
+    docker:
+      - image: circleci/python:latest
+    environment:
+      TF_VERSION: "0.11.13"
+    steps:
+      - restore_cache:
+          keys:
+            - terraform-cache-v1-{{ .Revision }}
+      - run:
+          name: run terraform rds apply
+          command: |
+            cd ./orcs-rds-terraform
+            ~/terraform init -backend-config="bucket=orcs-sandbox" -backend-config="key=orcs-rds-terraform/${MY_ENV}.tfstate"
+            ~/terraform plan -refresh=true -var-file environments/${MY_ENV}.tfvars -out ${MY_ENV}.plan
+            ~/terraform apply -auto-approve ${MY_ENV}.plan
+workflows:
+  version: 2
+  build-test-approval:
+    jobs:
+      - testterraform
+      - sandbox-ecs:
+          requires:
+            - testterraform
+      - sandbox-rds:
+          requires:
+            - testterraform
+      - hold-sbx-ecs:
+          type: approval
+          requires:
+            - sandbox-ecs
+      - hold-sbx-rds:
+          type: approval
+          requires:
+            - sandbox-rds
+      - deploy-sandbox-ecs:
+          requires:
+            - hold-sbx-ecs
+      - deploy-sandbox-rds:
+          requires:
+            - hold-sbx-rds

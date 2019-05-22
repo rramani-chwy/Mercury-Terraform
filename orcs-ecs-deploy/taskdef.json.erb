@@ -1,0 +1,33 @@
+{
+    "family": "<%= task_family %>",
+    "volumes": [{
+          "host": {},
+          "name": "empty"
+    }],
+    "containerDefinitions": [{
+        "volumes_from": [],
+        "memory": <%= memory %>,
+        "dnsServers": [],
+        "portMappings": [{
+            "hostPort": <%= host_port %>,
+            "containerPort": <%= container_port %>,
+            "protocol": "tcp"
+        }],
+        "mountPoints": [],
+        "essential": true,
+        "name": "<%= app_name %>",
+        "environment": <%= environment.to_json %>,
+        "links": [],
+        "image": "<%= image_url %>:<%= image_tag %>",
+        "logConfiguration": {
+            "logDriver": "awslogs",
+            "options": {
+                "awslogs-region": "<%= region %>",
+                "awslogs-group": "<%= cluster_name %>",
+                "awslogs-stream-prefix": "<%= task_family %>"
+          }
+        },
+        "cpu": <%= cpu %>,
+        "privileged": false
+    }]
+}

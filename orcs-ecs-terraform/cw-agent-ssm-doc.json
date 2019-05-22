@@ -1,0 +1,24 @@
+{
+  "schemaVersion": "2.2",
+  "description": "Policy Document Example JSON Template.",
+  "mainSteps": [
+      {
+          "action": "aws:runDocument",
+          "name": "installCloudWatchAgent",
+          "inputs": {
+              "documentType": "SSMDocument",
+              "documentPath": "AWS-ConfigureAWSPackage",
+              "documentParameters": "{\"action\":\"Install\", \"name\":\"AmazonCloudWatchAgent\"}"
+          }
+      },
+      {
+          "action": "aws:runDocument",
+          "name": "configureCloudWatchAgent",
+          "inputs": {
+              "documentType": "SSMDocument",
+              "documentPath": "AmazonCloudWatch-ManageAgent",
+              "documentParameters": "{\"action\":\"configure\", \"optionalConfigurationSource\":\"ssm\", \"optionalConfigurationLocation\":\"AmazonCloudWatch-ecs_config\", \"optionalRestart\":\"yes\"}"
+          }
+      }
+  ]
+}

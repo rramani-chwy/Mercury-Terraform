@@ -1,0 +1,6 @@
+*.tfstate*
+.terraform
+**/.terraform
+**/*.aws-iam-credentials
+*.plan*
+*.log*

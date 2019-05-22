@@ -1,0 +1,10 @@
+variable "region" {}
+variable "name" {}
+variable "ecs_cluster_id" {}
+variable "task_definition" {}
+variable "desired_count" {}
+variable "iam_role" {}
+variable "elb_id" {}
+variable "container_port" {}
+variable "volume_name" {}
+variable "volume_host_path" {}

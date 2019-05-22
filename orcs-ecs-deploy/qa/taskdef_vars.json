@@ -1,0 +1,40 @@
+
+{
+  "cpu": 512,
+  "memory": 2048,
+  "image_url": "953164603717.dkr.ecr.us-east-1.amazonaws.com/chewy-inc/orcs-api",
+  "environment": [
+   {
+      "name": "environment",
+      "value": "qa"
+    },
+    {
+      "name": "AWS_SECRETS_DBSECRETNAME",
+      "value": "orcs-database/secret/us-east-1/qa"
+    },
+    {
+      "name": "AWS_SECRETS_REGION",
+      "value": "us-east-1"
+    },
+    {
+      "name": "AWS_S3_BUCKETNAME",
+      "value": "orcs-qa"
+    },
+    {
+      "name": "AWS_REGION",
+      "value": "us-east-1"
+    },
+    {
+      "name": "SPRING_PROFILES_ACTIVE",
+      "value": "qa"
+    },
+    {
+      "name": "AWS_SQS_INBOUNDSQS_INBOUNDQUEUENAME",
+      "value": "orc-inbound-qa.fifo"
+    },
+    {
+      "name": "AWS_SQS_OUTBOUNDSQS_OUTBOUNDQUEUENAME",
+      "value": "orc-outbound-qa.fifo"
+    }
+  ]
+}

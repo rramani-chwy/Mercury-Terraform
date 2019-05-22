@@ -1,0 +1,25 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": [
+                "ds:*",
+                "application-autoscaling:*",
+                "cloudwatch:*",
+                "logs:*",
+                "ssm:*",
+                "ecs:*",
+                "ec2:*",
+                "ecr:*",
+                "ssmmessages:*",
+                "elasticloadbalancing:*",
+                "autoscaling:*",
+                "sqs:*",
+                "s3:*",
+                "secretsmanager:*"
+      ],
+      "Resource": "*"
+    }
+  ]
+}
