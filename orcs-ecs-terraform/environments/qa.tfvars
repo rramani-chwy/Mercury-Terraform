@@ -1,8 +1,8 @@
 # Standard variables
 environment = "qa"
 region                      = "us-east-1"
-account                     = "orcs-sandbox"
-cluster_name   = "orcs-ecs"
+account                     = "mrc-sandbox"
+cluster_name   = "mrc-ecs"
 
 vpc_id = "vpc-05f2d400cc06d59bf"
 # ECS
@@ -25,4 +25,4 @@ autoscale_desired_capacity  = "2"
 # S3 variables
 acl = "private"
 versioning = "false"
-s3_bcuket_name = "orcs"
+s3_bucket_name = "mrc"
