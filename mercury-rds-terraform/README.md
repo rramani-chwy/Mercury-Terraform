@@ -11,7 +11,7 @@ $ MY_ENV=qa # This depends on the application environment present in your enviro
 
 
 # Pull the remote state, plan the deploy and apply. This is very important which has to be looked through
-$ terraform init -backend-config="bucket=orcs-sandbox" -backend-config="key=orcs-rds-terraform/${MY_ENV}.tfstate"
+$ terraform init -backend-config="bucket=mercury-sandbox" -backend-config="key=mercury-rds-terraform/${MY_ENV}.tfstate"
 
 # Run plan, fix errors, and validate output
 $ terraform plan -refresh=true -var-file environments/${MY_ENV}.tfvars -out ${MY_ENV}.plan

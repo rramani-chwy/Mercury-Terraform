@@ -14,7 +14,7 @@ lb_public_subnets = ["subnet-0fcc7953e773157c8"]
 public_subnets = "subnet-0fcc7953e773157c8"
 
 
-custom_dns = "dev .mercury.chewy.com."
+custom_dns = "dev.mercury.chewy.com."
 mercury_ssl_arn = "arn:aws:acm:us-east-1:533690257859:certificate/0a2c75f4-2872-4e76-aa79-03d598c06ca1"
 
 

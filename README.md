@@ -1,4 +1,4 @@
-# ORCS-terraform
+# Mercury-terraform
 ![Terraform](https://img.shields.io/badge/Terraform-~%3E0.11.0-green.svg)
 
 Provisions chewy's orc infrastructure.
