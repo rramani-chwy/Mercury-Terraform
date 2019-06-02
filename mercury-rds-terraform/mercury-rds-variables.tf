@@ -86,5 +86,5 @@ variable "db_skip_final_snapshot" {
 }
 
 variable "db_final_snapshot_identifier" {
-  default = "orc-snapshot"
+  default = "mercury-snapshot"
 }
