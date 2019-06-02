@@ -1,7 +1,7 @@
 # Mercury-terraform
 ![Terraform](https://img.shields.io/badge/Terraform-~%3E0.11.0-green.svg)
 
-Provisions chewy's orc infrastructure.
+Provisions chewy's Mercury infrastructure.
 
 ## pre-requisites
 __Install Terraform:__
@@ -17,7 +17,7 @@ __Configure AWS Credentials and Config__
 
 Configure your IAM keys in __~/.aws/credentials__ :
 ```
-[orc-platform]
+[mercury-platform]
 aws_access_key_id=xxxxxxxxxxxxxxxxxxxx
 aws_secret_access_key=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 ```
@@ -25,7 +25,7 @@ Configure your Config in __~/.aws/config__ :
 ```bash
 [default]
 region = us-east-1
-[profile orc-platform]
+[profile mercury-platform]
 region = us-east-1
 
 ```
