@@ -1,21 +1,22 @@
 # Standard variables
-environment = "qa"
+environment = "sandbox"
 region                      = "us-east-1"
 account                     = "mrc-sandbox"
-cluster_name   = "mrc-ecs"
+cluster_name   = "mercury-ecs"
 
-vpc_id = "vpc-05f2d400cc06d59bf"
+vpc_id = "vpc-0a1c012f2b6180a43"
 # ECS
-service_ecs_instance_type   = "m4.large"
-private_subnets = "subnet-0485076fd0bcdfc29,subnet-0c549973b3eb7f8c0,subnet-0f2b560b8b79a2061"
+service_ecs_instance_type   = "t3.medium"
+private_subnets = "subnet-0fcc7953e773157c8"
 
 # Public subnets for applications
-lb_public_subnets = ["subnet-061ebb7c930595dce,subnet-0746f15327eabb0a4,subnet-099b3240e30a603ae"]
-public_subnets = "subnet-061ebb7c930595dce,subnet-0746f15327eabb0a4,subnet-099b3240e30a603ae"
+lb_public_subnets = ["subnet-0fcc7953e773157c8"]
+public_subnets = "subnet-0fcc7953e773157c8"
 
 
 custom_dns = "orcs-api.sandbox.orc.chewy.cloud"
-orcs_ssl_arn = "arn:aws:acm:us-east-1:953164603717:certificate/b8dfdb67-dea2-4aaa-bdda-e62591bdf254"
+mercury_ssl_arn = "arn:aws:acm:us-east-1:533690257859:certificate/0a2c75f4-2872-4e76-aa79-03d598c06ca1"
+
 
 # Default Autoscaling
 autoscale_min_size          = "2"
