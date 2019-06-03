@@ -11,7 +11,7 @@ resource "random_shuffle" "orcs_public_subnets" {
 }
 
 module "orcs_alb" {
-    source                      = "chewy-alb"
+    source                      = "git::ssh://git@github.com/Chewy-Inc/chewy-alb.git?ref=v1.x"
     vpc_id                      = "${var.vpc_id}"
     region                      = "${var.region}"
     lb_subnets                  = "${var.public_subnets}"
@@ -39,16 +39,16 @@ module "orcs_alb" {
 }
 
 
-//module "orcs-route53" {
-//    source          = "chewy-r53/app_dns"
-//    alias_dns_name  = "${module.orcs_alb.alb_dns_name}"
-//    alias_zone_id   = "${module.orcs_alb.alb_zone_id}"
-//    app_dns         = "${var.orcs_app_dns}"
-//    environment     = "${var.environment}"
-//    dns_format      = "${var.orcs_lb_is_internal == "true" ? 1 : 0 }" # Set to "3" if custom DNS
-//    hosted_zone_id  = "${var.hosted_zone_id}"
-//    #custom_dns     = "${var.custom_dns}"
-//}
+module "orcs-route53" {
+   source          = "chewy-r53/app_dns"
+   alias_dns_name  = "${module.orcs_alb.alb_dns_name}"
+   alias_zone_id   = "${module.orcs_alb.alb_zone_id}"
+   app_dns         = "${var.orcs_app_dns}"
+   environment     = "${var.environment}"
+   dns_format      = "${var.orcs_lb_is_internal == "true" ? 1 : 0 }" # Set to "3" if custom DNS
+   hosted_zone_id  = "${var.hosted_zone_id}"
+   #custom_dns     = "${var.custom_dns}"
+}
 
 
 resource "aws_security_group" "private_lb" {

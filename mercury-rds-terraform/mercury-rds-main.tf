@@ -13,7 +13,7 @@ provider "aws" {
 ###########################################
 terraform {
     backend "s3" {
-      bucket                = "orcs-sandbox"
+      bucket                = "mercury-sandbox"
       region                = "us-east-1"
       dynamodb_table        = "terraform"
     }

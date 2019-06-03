@@ -81,7 +81,7 @@ module "ecs_cluster" {
 
 # Setting Up IAM for ECS
 module "iam" {
-    source      = "chewy-iam"
+    source      = "git::ssh://git@github.com/Chewy-Inc/chewy-iam.git?ref=v1.x"
     iam_region  = "${var.region}"
     name        = "${var.cluster_name}-${var.environment}-${var.region}"
     role        = "${file("policies/role.json")}"
