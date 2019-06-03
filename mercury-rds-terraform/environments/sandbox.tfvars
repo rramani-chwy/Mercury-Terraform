@@ -3,5 +3,5 @@ vpc_id = "vpc-0a1c012f2b6180a43" // VPC which you want to launch your RDS
 environment = "sandbox"
 cluster_name = "mercury"
 region = "us-east-1"
-account                     = "chewy-sandbox-mercury"
+account = "chewy-sandbox-mercury"
 db_name = "mercurysandbox"

@@ -6,6 +6,11 @@
 # Authenticate with AWS
 $ aws configure
 
+
+## Remove the terraform files
+rm -rf .terraform
+
+
 # Set environment
 $ MY_ENV=qa # This depends on the application environment present in your environments folder. Ex: qa, staging or production
 

@@ -4,7 +4,7 @@
 
 provider "aws" {
     region  = "${var.region}"
-    profile = "${var.account}" ## Multiple account setup
+  #  profile = "${var.account}" ## Multiple account setup
 
 }
 
