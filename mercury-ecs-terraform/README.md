@@ -13,7 +13,7 @@ $ MY_ENV=qa # This depends on the application environment present in your enviro
 $ terraform init -backend-config="bucket=mercury-sandbox" -backend-config="key=mercury-ecs-terraform/${MY_ENV}.tfstate"
 
 # Pull the remote state, plan the deploy and apply. This is very important which has to be looked through
-$ terraform init -backend-config="bucket=mercury-prod" -backend-config="key=mercury-ecs-terraform/${MY_ENV}.tfvars"
+$ terraform init -backend-config="bucket=mercury-sandbox" -backend-config="key=mercury-ecs-terraform/${MY_ENV}.tfvars"
 
 # Run plan, fix errors, and validate output
 $ terraform plan -refresh=true -var-file environments/${MY_ENV}.tfvars -out ${MY_ENV}.plan

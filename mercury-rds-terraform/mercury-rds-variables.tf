@@ -3,7 +3,7 @@
 #
 ###############################################################################
 variable "environment" {
-  description = "enivorment identifier"
+  description = "environment identifier"
 }
 
 variable "vpc_id" {
@@ -55,7 +55,7 @@ variable "db_engine_version" {
 }
 
 variable "db_instance_class" {
-  default = "db.t2.micro"
+  default = "db.m5.xlarge"
 }
 
 
