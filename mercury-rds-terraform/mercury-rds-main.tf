@@ -109,12 +109,13 @@ resource "aws_security_group" "db_security_group" {
   }
   ingress {
     # allow all traffic to private SN
-    from_port = "0"
+    from_port = "5432"
     to_port   = "0"
-    protocol  = "-1"
+    protocol  = "tcp"
 
     cidr_blocks = [
       "10.0.0.0/8",
+      "192.168.104.0/23",
     ]
   }
 
